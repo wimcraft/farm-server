@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumber, IsString, ValidateNested } from "class-validator";
+import { Type } from 'class-transformer';
 
 export class CreateUserDto {
   @IsEmail()
@@ -8,4 +9,23 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   public password: string;
+
+  @IsString()
+  @IsNotEmpty()
+  public address: string;
+
+  @IsNotEmpty()
+  @ValidateNested()
+  @Type(() => CoordinatesDto)
+  public coordinates: CoordinatesDto;
+}
+
+class CoordinatesDto {
+  @IsNumber()
+  @Type(() => Number)
+  lat: number;
+
+  @IsNumber()
+  @Type(() => Number)
+  long: number;
 }
