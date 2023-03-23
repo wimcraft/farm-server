@@ -36,10 +36,18 @@ describe("UsersController", () => {
   });
 
   describe("POST /users", () => {
-    const createUserDto: CreateUserDto = { email: "user@test.com", password: "password" };
+    const createUserDto: CreateUserDto = {
+      email: "user@test.com",
+      password: "password",
+      address: "Oak Street, 3",
+      coordinates: {
+        "lat": 37.7749,
+        "long": -122.4194
+      }
+    }
 
     it("should create new user", async () => {
-      const res = await agent.post("/api/users").send(createUserDto);
+      const res = await agent.post("/api/v1/users").send(createUserDto);
 
       expect(res.statusCode).toBe(201);
       expect(res.body).toMatchObject({
@@ -53,7 +61,7 @@ describe("UsersController", () => {
     it("should throw UnprocessableEntityError if user already exists", async () => {
       await usersService.createUser(createUserDto);
 
-      const res = await agent.post("/api/users").send(createUserDto);
+      const res = await agent.post("/api/v1/users").send(createUserDto);
 
       expect(res.statusCode).toBe(422);
       expect(res.body).toMatchObject({

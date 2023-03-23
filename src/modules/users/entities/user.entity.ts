@@ -1,15 +1,20 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Farm } from "../../farms/entities/farm.entity";
 
 export class Coordinates {
-  @Column('float')
-  lat: number;
+  @Column("float")
+  public lat: number;
 
-  @Column('float')
-  long: number;
+  @Column("float")
+  public long: number;
 }
 
 @Entity()
 export class User {
+  constructor(partial?: Partial<User>) {
+    Object.assign(this, partial);
+  }
+
   @PrimaryGeneratedColumn("uuid")
   public readonly id: string;
 
@@ -30,4 +35,11 @@ export class User {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  @OneToMany(() => Farm, farm => farm.user)
+  public farms: Farm[];
+}
+
+export interface IUser {
+  id: string;
 }

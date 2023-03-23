@@ -1,5 +1,5 @@
 declare namespace Express {
     export interface Request {
-        user?: any
+        user?:import ('../../src/modules/users/entities/user.entity').IUser
     }
 }

@@ -23,9 +23,9 @@ export class CreateUserDto {
 class CoordinatesDto {
   @IsNumber()
   @Type(() => Number)
-  lat: number;
+  public lat: number;
 
   @IsNumber()
   @Type(() => Number)
-  long: number;
+  public long: number;
 }
